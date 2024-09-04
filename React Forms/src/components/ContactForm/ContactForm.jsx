@@ -2,8 +2,14 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import style from "./ContactForm.module.scss";
 
+//Destructuring  error from formState at line 11
 export const ContactForm = () => {
-  const { register, handleSubmit, reset } = useForm();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
   const [data, setData] = useState("");
   const [formSent, setFormSent] = useState(false);
 
@@ -20,9 +26,6 @@ export const ContactForm = () => {
     reset();
   };
 
-  const fullNameRegex =
-    /^[A-ZÆØÅ][a-zæøåA-ZÆØÅ' -]*[a-zæøåA-ZÆØÅ]?(?:\s[A-ZÆØÅ][a-zæøåA-ZÆØÅ' -]*[a-zæøåA-ZÆØÅ]?)?$/;
-
   const phoneRegex = /^(\d{2}[-\s]?\d{2}[-\s]?\d{2}[-\s]?\d{2})$/;
 
   const EmailregEx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -32,24 +35,42 @@ export const ContactForm = () => {
       <form className={style.formStyling} onSubmit={handleSubmit(handleForm)}>
         <input
           {...register("fullname", {
-            required: "Must be at least 6 characters",
-            minLength: 10,
+            required: "Full name is required",
+            pattern: {
+              message: "Invalid name format",
+            },
+            minLength: {
+              value: 6,
+              message: "Must be at least 6 characters",
+            },
           })}
           placeholder="Full Name"
         />
+        {errors.fullname ? <span>{errors.fullname.message}</span> : null}
         <input
           type="number"
           {...register("phonenumber", {
-            required: true,
-            pattern: phoneRegex,
+            required: "Phonenumber is required",
+            pattern: {
+              value: phoneRegex,
+              message: "Must contain 8 numbers",
+            },
           })}
           placeholder="Phonenumber"
         />
+        {errors.phonenumber ? <span>{errors.phonenumber.message}</span> : null}
         <input
           type="email"
-          {...register("email", { required: true, pattern: EmailregEx })}
+          {...register("email", {
+            required: "Email is required",
+            pattern: {
+              value: EmailregEx,
+              message: "Must contain a @ and a domain (John@doe.com)",
+            },
+          })}
           placeholder="None@fake.com"
         />
+        {errors.email ? <span>{errors.email.message}</span> : null}
         <textarea
           {...register("comment")}
           placeholder="Your Message"
