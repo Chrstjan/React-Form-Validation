@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import style from "./ContactForm.module.scss";
 
-//Destructuring  error from formState at line 11
+//Destructuring the errors value from formState at line 11
 export const ContactForm = () => {
   const {
     register,
@@ -25,6 +25,10 @@ export const ContactForm = () => {
     setData(emptyForm);
     reset();
   };
+
+  useEffect(() => {
+    console.log(errors);
+  }, []);
 
   const phoneRegex = /^(\d{2}[-\s]?\d{2}[-\s]?\d{2}[-\s]?\d{2})$/;
 
