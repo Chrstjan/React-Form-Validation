@@ -50,7 +50,10 @@ export const ContactForm = () => {
           })}
           placeholder="Full Name"
         />
-        {errors.fullname ? <span>{errors.fullname.message}</span> : null}
+        {/* console.log(errors) */}
+        {errors.fullname ? (
+          <span className={style.errorMessage}>{errors.fullname.message}</span>
+        ) : null}
         <input
           type="number"
           {...register("phonenumber", {
@@ -62,7 +65,11 @@ export const ContactForm = () => {
           })}
           placeholder="Phonenumber"
         />
-        {errors.phonenumber ? <span>{errors.phonenumber.message}</span> : null}
+        {errors.phonenumber ? (
+          <span className={style.errorMessage}>
+            {errors.phonenumber.message}
+          </span>
+        ) : null}
         <input
           type="email"
           {...register("email", {
@@ -74,7 +81,9 @@ export const ContactForm = () => {
           })}
           placeholder="None@fake.com"
         />
-        {errors.email ? <span>{errors.email.message}</span> : null}
+        {errors.email ? (
+          <span className={style.errorMessage}>{errors.email.message}</span>
+        ) : null}
         <textarea
           {...register("comment")}
           placeholder="Your Message"
