@@ -1,9 +1,12 @@
 import "./App.scss";
+import { ControlledForm } from "./components/ControlledForm/ControlledForm";
+import { UnControlledForm } from "./components/UnControlledForm/ControlledForm";
 
 function App() {
   return (
     <>
-      <h1>React Boilerplate</h1>
+      {/* <UnControlledForm /> */}
+      <ControlledForm />
     </>
   );
 }
